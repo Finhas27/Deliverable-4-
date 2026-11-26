@@ -2,8 +2,8 @@
 
 
 class Temperature:
-    def __init__(self, value, unit="C"):
-        self._value = value
+    def __init__(self,value: float, unit="C"):
+        self._value = float(value)
         self._unit = unit.upper()
         if self._unit not in ("C", "F", "K"):
             raise ValueError("Temperature unit must be 'C', 'F', or 'K'.")
@@ -89,7 +89,12 @@ t2 = Temperature(10)
 
 #t.unit = "Banana"  # should raise AttributeError since unit is read-only
 
-#assert Temperature(32, "F").to_celsius() == 5.0 -- tested with assert, to se if value is correct, but commented out to avoid stopping the script
+#assert Temperature(32, "F").to_celsius() == 5.0 -- tested with assert, to se if value is correct, 
+# but commented out to avoid stopping the script
+
+print(Temperature(-40, "F").to_kelvin())
+assert abs(Temperature(-40, "F").to_kelvin() - 233.15) <= 0.1
+# The code gets more tolerant to floating point errors, so it checks if the difference is less than or equal to 0.1
 
 """ Celsius """
 print(f"{Temperature(32, "F").to_celsius()} C")  # should give: 0.0
