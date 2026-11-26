@@ -64,6 +64,9 @@ class Temperature:
     def __str__(self):
         return f"{self.value:.2f} °{self.unit}"
 
+    def __repr__(self):
+        return f"Temperature({self.value}, '{self.unit}')"
+
 t = Temperature(0, "C")
 t_f = t.convert_to("f")
 print(t_f.value, t_f.unit)   # should give: 32.0 F
@@ -94,6 +97,12 @@ t2 = Temperature(10)
 #assert Temperature(32, "F").to_celsius() == 5.0 -- tested with assert, to se if value is correct, 
 # but commented out to avoid stopping the script
 
+t = Temperature(25, "C")
+print(str(t))     # 25.00 °C
+print(repr(t))    # Temperature(25.0, 'C')
+# A lite test to see if the conversion methods work correctly
+
+
 print(Temperature(-40, "F").to_kelvin())
 assert abs(Temperature(-40, "F").to_kelvin() - 233.15) <= 1e-9
 # The code gets more tolerant to floating point errors, so it checks if the difference is less than or equal to 0.1
@@ -115,3 +124,4 @@ print(f"{Temperature(300, "K").to_kelvin()} K")     # should give: 300.0
 
 print(Temperature(25, "C"))
 print(Temperature(98.6, "f"))
+
