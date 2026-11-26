@@ -1,28 +1,22 @@
 
-
-
-
-
-
 class Temperature:
     TOLERANCE = 1e-9
 
     def __init__(self,value: float, unit="C"):
-      
+   # Create a temperature with a value and a unit (C, F or K).
         self._value = float(value)
         self._unit = unit.upper()
         if self._unit not in ("C", "F", "K"):
             raise ValueError("Temperature unit must be 'C', 'F', or 'K'.")
         if self.to_kelvin() < -self.TOLERANCE:
             raise ValueError("Temperature is below absolute zero.")
-        
         # Using -TOLERANCE instead of 0 gives a small margin for
         # floating-point errors, so values at absolute zero are not rejected.
 
     @property
     def value(self):
         return self._value
-
+    
     @property
     def unit(self):
         return self._unit
@@ -81,7 +75,7 @@ class Temperature:
         if isinstance(other, Temperature):
             return abs(self.to_kelvin() - other.to_kelvin()) <=self.TOLERANCE
         return NotImplemented
-    # Insitance: askes if the other object is an Temperature object, 
+    # isinstance: asks if the other object is a Temperature object, 
     # if it is, it converts both to Kelvin and checks if the difference is within the tolerance. 
     # If not, it returns NotImplemented. as in it does not know how to compare the two objects.
 
