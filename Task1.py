@@ -17,7 +17,7 @@ class Temperature:
         
          # Using -TOLERANCE instead of 0 gives a small margin for
         # floating-point errors, so values at absolute zero are not rejected.
-        
+
     @property
     def value(self):
         return self._value
@@ -84,6 +84,15 @@ class Temperature:
     # if it is, it converts both to Kelvin and checks if the difference is within the tolerance. 
     # If not, it returns NotImplemented. as in it does not know how to compare the two objects.
 
+    def __ne__(self, other):
+        if isinstance(other, Temperature):
+            return not (self == other)
+        return NotImplemented
+
+        # The __ne__ method checks for inequality. 
+        # If __eq__ changes, __ne__ will automatically reflect that change, 
+        # ensuring consistency in equality and inequality comparisons.
+        
 t = Temperature(0, "C")
 t_f = t.convert_to("f")
 print(t_f.value, t_f.unit)   # should give: 32.0 F
