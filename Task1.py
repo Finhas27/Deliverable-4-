@@ -28,6 +28,25 @@ class Temperature:
         elif self.unit == "K":
             return self.value -273.15
 
+    def to_fahrenheit(self):
+        if self.unit == "C":
+            return (self.value * 9/5) + 32
+        
+        elif self.unit == "F":
+            return self.value
+        
+        elif self.unit == "K":
+            return (self.value - 273.15) * 9/5 + 32
+    def to_kelvin(self):
+        if self.unit == "C":
+            return self.value + 273.15
+        
+        elif self.unit == "F":
+            return (self.value - 32) * 5/9 + 273.15
+        
+        elif self.unit == "K":
+            return self.value
+        
 celsius = Temperature(25, "C")
 fahrenheit = Temperature(77, "F")
 kelvin = Temperature(298.15, "K")
@@ -49,10 +68,18 @@ print(t2.value, t2.unit)  # should give: 10 C
 
 #t.unit = "Banana"  # should raise AttributeError since unit is read-only
 
+""" Celsius """
+print(f"{Temperature(32, "F").to_celsius()} C")  # should give: 0.0
+print(f"{Temperature(273.15, "K").to_celsius()} C")  # should give: 0.0
+print(f"{Temperature(25, "C").to_celsius()} C") # should give: 25.0
 
+""" Fahrenheit """
+print(f"{Temperature(32, "F").to_fahrenheit()} F")  # should give: 32.0
+print(f"{Temperature(273.15, "K").to_fahrenheit()} F")  # should give: 32.0
+print(f"{Temperature(25, "C").to_fahrenheit()} F")  # should give: 77.0
 
-print(Temperature(32, "F").to_celsius())  # should give: 0.0
-print(Temperature(273.15, "K").to_celsius())  # should give: 0.0
-print(Temperature(25, "C").to_celsius()) # should give: 25.0
-
+""" Kelvin """
+print(f"{Temperature(0, "C").to_kelvin()} K")       # should give: 273.15
+print(f"{Temperature(212, "F").to_kelvin()} K")     # should give: 373.15
+print(f"{Temperature(300, "K").to_kelvin()} K")     # should give: 300.0
 
