@@ -37,6 +37,7 @@ class Temperature:
         
         elif self.unit == "K":
             return (self.value - 273.15) * 9/5 + 32
+   
     def to_kelvin(self):
         if self.unit == "C":
             return self.value + 273.15
@@ -46,7 +47,27 @@ class Temperature:
         
         elif self.unit == "K":
             return self.value
+
         
+    def convert_to(self, target_unit):
+        target_unit = target_unit.upper()
+        if target_unit not in ("C", "F", "K"):
+            raise ValueError("Target unit must be 'C', 'F', or 'K'.")
+
+        if target_unit == "C":
+            return Temperature(self.to_celsius(), "C")
+        elif target_unit == "F":
+            return Temperature(self.to_fahrenheit(), "F")
+        elif target_unit == "K":
+            return Temperature(self.to_kelvin(), "K")
+    
+    
+t = Temperature(0, "C")
+t_f = t.convert_to("f")
+print(t_f.value, t_f.unit)   # should give: 32.0 F
+        
+    
+  
 celsius = Temperature(25, "C")
 fahrenheit = Temperature(77, "F")
 kelvin = Temperature(298.15, "K")
@@ -62,11 +83,13 @@ t = Temperature(25, "c")
 #print(t.value, t.unit)    # should give: 25 C
 
 t2 = Temperature(10)
-print(t2.value, t2.unit)  # should give: 10 C
+#print(t2.value, t2.unit)  # should give: 10 C
 
 #t_bad = Temperature(25, "X")   # should raise ValueError
 
 #t.unit = "Banana"  # should raise AttributeError since unit is read-only
+
+#assert Temperature(32, "F").to_celsius() == 5.0 -- tested with assert, to se if value is correct, but commented out to avoid stopping the script
 
 """ Celsius """
 print(f"{Temperature(32, "F").to_celsius()} C")  # should give: 0.0
