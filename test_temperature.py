@@ -97,3 +97,40 @@ def test_round_trip():
 
 # Converts temperature from C -> F -> K -> C 
 # and checks if the final value is approximately equal to the original value that is (25°C).
+
+#---------------------------------------------------------
+
+def test_equality_across_units():
+    t1 = Temperature(0, "C")
+    t2 = Temperature(32, "F")
+    t3 = Temperature(273.15, "K")
+    assert t1 == t2
+    assert t2 == t3
+    assert t1 == t3
+    # This test checks that the equality of temperatures is consistent across different units.
+
+def test_ordering_across_units():
+    t1 = Temperature(0, "C")
+    t2 = Temperature(32, "F")
+    t3 = Temperature(273.15, "K")
+    assert t1 <= t2
+    assert t2 <= t3
+    assert t1 <= t3
+    cold = Temperature(-40, "F")
+    hot = Temperature(373.15, "K")
+    assert cold < hot
+
+    assert t1 <= t2
+    assert t1 <= t2           
+    assert not (t1 < t2)     
+    assert not (t1 < t2)     
+
+
+    assert cold < hot
+    assert hot > cold
+    assert not (hot < cold)
+
+
+    # This test checks that the ordering of temperatures is consistent across different units. 
+    # It verifies that 0°C is less than or equal to 32°F, 
+    # which is less than or equal to 273.15K, and that 0°C is also less than or equal to 273.15K.t
