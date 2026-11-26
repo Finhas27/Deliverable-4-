@@ -129,5 +129,3 @@ def test_unsupported_types():
 
     with pytest.raises(TypeError):
         Fraction(1, 2) >= 5
-
-print("All tests passed successfully.")
