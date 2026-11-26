@@ -48,3 +48,36 @@ def test_below_absolute_zero_kelvin():
     with pytest.raises(ValueError):
         Temperature(-1, "K")
         # Check that a temperature below absolute zero in Kelvin raises a ValueError.
+
+    
+def test_freeze_point():
+    t = Temperature(0, "C")
+    assert t.to_fahrenheit() == pytest.approx(32, abs=1e-9)
+    assert t.to_kelvin() == pytest.approx(273.15, abs=1e-9)
+
+
+
+def test_boiling_point():
+    t = Temperature(100, "C")
+    assert t.to_fahrenheit() == pytest.approx(212, abs=1e-9)
+    assert t.to_kelvin() == pytest.approx(373.15, abs=1e-9)
+
+
+def test_human_body_temperature():
+    t = Temperature(37, "C")
+    assert t.to_fahrenheit() == pytest.approx(98.6, abs=1e-9)
+    assert t.to_kelvin() == pytest.approx(310.15, abs=1e-9)
+
+
+def test_absolute_zero():
+    t = Temperature(0, "K")
+    assert t.to_celsius() == pytest.approx(-273.15, abs=1e-9)
+    assert t.to_fahrenheit() == pytest.approx(-459.67, abs=1e-9)
+
+
+def test_crossing_points():
+    t = Temperature(-40, "C")
+    assert t.to_kelvin() == pytest.approx(233.15, abs=1e-9)
+    assert t.to_fahrenheit() == pytest.approx(-40, abs=1e-9)
+    assert Temperature(-40, "F").to_celsius() == pytest.approx(-40, abs=1e-9)
+    
