@@ -32,3 +32,19 @@ def test_invalid_unit():
     with pytest.raises(ValueError):
         Temperature(10, "X")
         # Check that an invalid unit raises a ValueError.
+
+
+def test_below_absolute_zero():
+    with pytest.raises(ValueError):
+        Temperature(-273.16, "C")
+        # Check that a temperature below absolute zero in Celsius raises a ValueError.
+
+def test_below_absolute_zero_fahrenheit():
+    with pytest.raises(ValueError):
+        Temperature(-459.68, "F")
+        # Check that a temperature below absolute zero in Fahrenheit raises a ValueError.
+
+def test_below_absolute_zero_kelvin():
+    with pytest.raises(ValueError):
+        Temperature(-1, "K")
+        # Check that a temperature below absolute zero in Kelvin raises a ValueError.
