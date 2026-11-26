@@ -1,16 +1,23 @@
 
 
+
+
+
+
 class Temperature:
     TOLERANCE = 1e-9
 
-class Temperature:
     def __init__(self,value: float, unit="C"):
         self._value = float(value)
         self._unit = unit.upper()
         if self._unit not in ("C", "F", "K"):
             raise ValueError("Temperature unit must be 'C', 'F', or 'K'.")
-    
-
+        if self.to_kelvin() < -self.TOLERANCE:
+            raise ValueError("Temperature is below absolute zero.")
+        
+         # Using -TOLERANCE instead of 0 gives a small margin for
+        # floating-point errors, so values at absolute zero are not rejected.
+        
     @property
     def value(self):
         return self._value
@@ -71,12 +78,12 @@ class Temperature:
 
     def __eq__(self, other):
         if isinstance(other, Temperature):
-            return abs(self.to_kelvin() - other.to_kelvin()) <= Temperature.TOLERANCE
+            return abs(self.to_kelvin() - other.to_kelvin()) <=self.TOLERANCE
         return NotImplemented
     # Insitance: askes if the other object is an Temperature object, 
     # if it is, it converts both to Kelvin and checks if the difference is within the tolerance. 
     # If not, it returns NotImplemented. as in it does not know how to compare the two objects.
-    
+
 t = Temperature(0, "C")
 t_f = t.convert_to("f")
 print(t_f.value, t_f.unit)   # should give: 32.0 F
@@ -118,8 +125,8 @@ print(repr(t))    # Temperature(25.0, 'C')
 
 
 print(Temperature(-40, "F").to_kelvin())
-assert abs(Temperature(-40, "F").to_kelvin() - 233.15) <= Temperature.TOLERANCE
-# The code gets more tolerant to floating point errors, so it checks if the difference is less than or equal to 0.1
+assert abs(Temperature(-40, "F").to_kelvin() - 233.15) <= t.TOLERANCE
+# The code gets more tolerant to floating point errors, so it checks if the difference is less than or equal to 1e-9. 
 
 """ Celsius """
 print(f"{Temperature(32, "F").to_celsius()} C")  # should give: 0.0
@@ -140,3 +147,6 @@ print(Temperature(25, "C"))
 print(Temperature(98.6, "f"))
 
 print(Temperature(0, "C") == Temperature(32, "F"))
+
+#Temperature(-300, "C")     # should raise ValueError
+print(Temperature(0, "K"))
