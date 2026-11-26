@@ -33,6 +33,7 @@ t = Temperature(25, "c")
 t2 = Temperature(10)
 print(t2.value, t2.unit)  # should give: 10 C
 
-t_bad = Temperature(25, "X")   # should raise ValueError
+#t_bad = Temperature(25, "X")   # should raise ValueError
 
+t.unit = "Banana"  # should raise AttributeError since unit is read-only
 
