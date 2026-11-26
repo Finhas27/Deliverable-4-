@@ -8,6 +8,7 @@ class Temperature:
     TOLERANCE = 1e-9
 
     def __init__(self,value: float, unit="C"):
+      
         self._value = float(value)
         self._unit = unit.upper()
         if self._unit not in ("C", "F", "K"):
@@ -15,7 +16,7 @@ class Temperature:
         if self.to_kelvin() < -self.TOLERANCE:
             raise ValueError("Temperature is below absolute zero.")
         
-         # Using -TOLERANCE instead of 0 gives a small margin for
+        # Using -TOLERANCE instead of 0 gives a small margin for
         # floating-point errors, so values at absolute zero are not rejected.
 
     @property
@@ -101,6 +102,29 @@ class Temperature:
     # The __lt__ method checks if the current temperature is less than another temperature.
     # It converts both temperatures to Kelvin for comparison.
 
+    def __le__(self, other):
+        if isinstance(other, Temperature):
+            return self.to_kelvin() <= other.to_kelvin() + self.TOLERANCE
+        return NotImplemented
+
+    # The __le__ method checks if the current temperature is less than or equal to another temperature.
+
+    def __gt__(self, other):
+        if isinstance(other, Temperature):
+            return self.to_kelvin() > other.to_kelvin() + self.TOLERANCE
+        return NotImplemented
+
+    # The __gt__ method checks if the current temperature is greater than another temperature.
+
+    def __ge__(self, other):
+        if isinstance(other, Temperature):
+            return self.to_kelvin() >= other.to_kelvin() - self.TOLERANCE
+        return NotImplemented
+
+    # The __ge__ method checks if the current temperature is greater than or equal to another temperature.
+
+
+
 t = Temperature(0, "C")
 t_f = t.convert_to("f")
 print(t_f.value, t_f.unit)   # should give: 32.0 F
@@ -128,7 +152,10 @@ t2 = Temperature(10)
 
 #t.unit = "Banana"  # should raise AttributeError since unit is read-only
 
-#assert Temperature(32, "F").to_celsius() == 5.0 -- tested with assert, to se if value is correct, 
+#----------------------------------------------------------------------------# made this line to help me seperate the tests.
+
+# tested with assert, to se if value is correct, 
+#assert Temperature(32, "F").to_celsius() == 5.0 -
 # but commented out to avoid stopping the script
 
 
@@ -165,5 +192,11 @@ print(Temperature(98.6, "f"))
 
 print(Temperature(0, "C") == Temperature(32, "F"))
 
+
+# Again som more tests to see if the comparison operators work as expected
 #Temperature(-300, "C")     # should raise ValueError
 print(Temperature(0, "K"))
+print(Temperature(0, "C") <= Temperature(32, "F"))    # True (like)
+print(Temperature(100, "C") > Temperature(0, "C"))    # True
+print(Temperature(0, "C") >= Temperature(32, "F"))    # True (like)
+print(Temperature(0, "C") > Temperature(32, "F"))     # False (like)
