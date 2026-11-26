@@ -25,4 +25,10 @@ def test_value_is_read_only():
     t = Temperature(10)
     with pytest.raises(AttributeError):
         t.value = 20
-        # Check that the value is read-only and cannot be changed after initialization  
+        # Check that the value is read-only and cannot be changed after initialization
+        
+
+def test_invalid_unit():
+    with pytest.raises(ValueError):
+        Temperature(10, "X")
+        # Check that an invalid unit raises a ValueError.
