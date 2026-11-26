@@ -60,8 +60,10 @@ class Temperature:
             return Temperature(self.to_fahrenheit(), "F")
         elif target_unit == "K":
             return Temperature(self.to_kelvin(), "K")
-    
-    
+        
+    def __str__(self):
+        return f"{self.value:.2f} °{self.unit}"
+
 t = Temperature(0, "C")
 t_f = t.convert_to("f")
 print(t_f.value, t_f.unit)   # should give: 32.0 F
@@ -93,7 +95,7 @@ t2 = Temperature(10)
 # but commented out to avoid stopping the script
 
 print(Temperature(-40, "F").to_kelvin())
-assert abs(Temperature(-40, "F").to_kelvin() - 233.15) <= 0.1
+assert abs(Temperature(-40, "F").to_kelvin() - 233.15) <= 1e-9
 # The code gets more tolerant to floating point errors, so it checks if the difference is less than or equal to 0.1
 
 """ Celsius """
@@ -111,3 +113,5 @@ print(f"{Temperature(0, "C").to_kelvin()} K")       # should give: 273.15
 print(f"{Temperature(212, "F").to_kelvin()} K")     # should give: 373.15
 print(f"{Temperature(300, "K").to_kelvin()} K")     # should give: 300.0
 
+print(Temperature(25, "C"))
+print(Temperature(98.6, "f"))
