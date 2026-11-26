@@ -134,3 +134,21 @@ def test_ordering_across_units():
     # This test checks that the ordering of temperatures is consistent across different units. 
     # It verifies that 0°C is less than or equal to 32°F, 
     # which is less than or equal to 273.15K, and that 0°C is also less than or equal to 273.15K.t
+
+
+
+def test_str_and_repr():
+    t = Temperature(25, "C")
+    assert str(t) == "25.00 °C"
+    assert repr(t) == "Temperature(25.0, 'C')"
+    
+    t = Temperature(98.6, "F")
+    assert str(t) == "98.60 °F"
+    assert repr(t) == "Temperature(98.6, 'F')"
+    
+    t = Temperature(373.15, "K")
+    assert str(t) == "373.15 °K"
+    assert repr(t) == "Temperature(373.15, 'K')"
+
+# writes the string representation of the temperature in a human-readable format 
+# and the official representation of the object, respectively.
