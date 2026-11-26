@@ -92,7 +92,15 @@ class Temperature:
         # The __ne__ method checks for inequality. 
         # If __eq__ changes, __ne__ will automatically reflect that change, 
         # ensuring consistency in equality and inequality comparisons.
-        
+    
+    def __lt__(self, other):
+        if isinstance(other, Temperature):
+            return self.to_kelvin() < other.to_kelvin() -self.TOLERANCE
+        return NotImplemented
+
+    # The __lt__ method checks if the current temperature is less than another temperature.
+    # It converts both temperatures to Kelvin for comparison.
+
 t = Temperature(0, "C")
 t_f = t.convert_to("f")
 print(t_f.value, t_f.unit)   # should give: 32.0 F
