@@ -49,7 +49,11 @@ def test_below_absolute_zero_kelvin():
         Temperature(-1, "K")
         # Check that a temperature below absolute zero in Kelvin raises a ValueError.
 
-    
+
+
+
+#---------------------------------------------------------
+# Test cases for temperature conversions    
 def test_freeze_point():
     t = Temperature(0, "C")
     assert t.to_fahrenheit() == pytest.approx(32, abs=1e-9)
@@ -80,4 +84,16 @@ def test_crossing_points():
     assert t.to_kelvin() == pytest.approx(233.15, abs=1e-9)
     assert t.to_fahrenheit() == pytest.approx(-40, abs=1e-9)
     assert Temperature(-40, "F").to_celsius() == pytest.approx(-40, abs=1e-9)
-    
+
+
+#---------------------------------------------------------
+
+def test_round_trip():
+    t = Temperature(25, "C")
+    convert_to_f = t.to_fahrenheit()
+    convert_back_to_k = Temperature(convert_to_f, "F").to_kelvin()
+    convert_back_to_c = Temperature(convert_back_to_k, "K").to_celsius()
+    assert convert_back_to_c == pytest.approx(25, abs=1e-9)
+
+# Converts temperature from C -> F -> K -> C 
+# and checks if the final value is approximately equal to the original value that is (25°C).
