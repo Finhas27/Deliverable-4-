@@ -1,5 +1,7 @@
 
 
+class Temperature:
+    TOLERANCE = 1e-9
 
 class Temperature:
     def __init__(self,value: float, unit="C"):
@@ -67,6 +69,14 @@ class Temperature:
     def __repr__(self):
         return f"Temperature({self.value}, '{self.unit}')"
 
+    def __eq__(self, other):
+        if isinstance(other, Temperature):
+            return abs(self.to_kelvin() - other.to_kelvin()) <= Temperature.TOLERANCE
+        return NotImplemented
+    # Insitance: askes if the other object is an Temperature object, 
+    # if it is, it converts both to Kelvin and checks if the difference is within the tolerance. 
+    # If not, it returns NotImplemented. as in it does not know how to compare the two objects.
+    
 t = Temperature(0, "C")
 t_f = t.convert_to("f")
 print(t_f.value, t_f.unit)   # should give: 32.0 F
@@ -97,6 +107,10 @@ t2 = Temperature(10)
 #assert Temperature(32, "F").to_celsius() == 5.0 -- tested with assert, to se if value is correct, 
 # but commented out to avoid stopping the script
 
+
+print(Temperature(0, "C") == 0)
+print(Temperature(0, "C") == "hello")
+
 t = Temperature(25, "C")
 print(str(t))     # 25.00 °C
 print(repr(t))    # Temperature(25.0, 'C')
@@ -104,7 +118,7 @@ print(repr(t))    # Temperature(25.0, 'C')
 
 
 print(Temperature(-40, "F").to_kelvin())
-assert abs(Temperature(-40, "F").to_kelvin() - 233.15) <= 1e-9
+assert abs(Temperature(-40, "F").to_kelvin() - 233.15) <= Temperature.TOLERANCE
 # The code gets more tolerant to floating point errors, so it checks if the difference is less than or equal to 0.1
 
 """ Celsius """
@@ -125,3 +139,4 @@ print(f"{Temperature(300, "K").to_kelvin()} K")     # should give: 300.0
 print(Temperature(25, "C"))
 print(Temperature(98.6, "f"))
 
+print(Temperature(0, "C") == Temperature(32, "F"))
