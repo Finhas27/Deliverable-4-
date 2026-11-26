@@ -1,6 +1,6 @@
 
 class Temperature:
-    TOLERANCE = 1e-9
+    TOLERANCE = 1e-9 # a small number to account for floating-point precision issues when comparing temperatures.
 
     def __init__(self,value: float, unit="C"):
    # Create a temperature with a value and a unit (C, F or K).
@@ -117,7 +117,5 @@ class Temperature:
 
     # The __ge__ method checks if the current temperature is greater than or equal to another temperature.
 
-    
-    
 
-    
+
